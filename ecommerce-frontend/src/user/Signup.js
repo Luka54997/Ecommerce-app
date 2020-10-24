@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 import Layout from '../core/Layout'
-import {Redirect} from 'react-router-dom'
-import {signIn,authenticate} from '../auth/auth'
+import {Link} from 'react-router-dom'
+import {signUp} from '../auth/auth'
+
+const Signup = () => {
 
 
-const SignIn = () => {
-
-
-    const[values,setValues] = useState({        
-        email: 'lukamilanovic689@gmail.com',
-        password: 'luka1234',
+    const[values,setValues] = useState({
+        name: '',
+        email: '',
+        password: '',
         error : '',
-        loading : false,
-        redirectTo:false
+        success : false
 
             
     })
 
-    const {email, password, loading, error,redirectTo } = values;
+    const { name, email, password, success, error } = values;
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value })
@@ -26,19 +25,19 @@ const SignIn = () => {
     const submit = event =>{
         
         event.preventDefault()
-        setValues({ ...values, error: false,loading:true})
-        signIn({email,password}).then(data =>{
+        signUp({name,email,password}).then(data =>{
             if(data.error){
 
-                setValues({...values,error:data.error,loading:false})
+                setValues({...values,error:data.error,success:false})
             }
             else{
-                authenticate(data,()=>{
-                    setValues({  
-                        loading : false,
-                        redirectTo: true
-    
-                    })
+                setValues({
+                    name: '',
+                    email: '',
+                    password: '',
+                    error : '',
+                    success : true
+
                 })
             }
         })
@@ -55,30 +54,28 @@ const SignIn = () => {
         )
     }
 
-    const showLoading = ()=>
-        
-        loading &&(
-            <div className="alert alert-info">
-                <h2>Loading...</h2>
-
-             </div>)
-    
-
-    const redirectUser = () =>{
-        if(redirectTo){
-            return <Redirect to='/'></Redirect>
-        }
-
+    const showSuccess = ()=>{
+        return(
+        <div className="alert alert-info" style={{display: success ? '' : 'none'}}>
+            Account created successfully. Please <Link to="/signin">SignIn</Link>
+        </div>
+        )
     }
 
 
      
 
-    const SignInForm = () =>{
+    const SignUpForm = () =>{
+
         return(
         <form>
 
-        
+        <div className="form-group">
+            <label className = "text-muted">Name</label>
+            <input onChange ={handleChange('name')} type="text" className="form-control" value={name}/>
+
+        </div>
+
         <div className="form-group">
             <label className = "text-muted">Email</label>
             <input onChange ={handleChange('email')} type="text" className="form-control"value={email}/>
@@ -100,11 +97,10 @@ const SignIn = () => {
 
     return(
 
-        <Layout title="SignIn page" description="SignIn to Node React E-commerce App" className="container col-md-6 offset-md-2" >
-            {showLoading()}
+        <Layout title="SignUp page" description="SignUp to Node React E-commerce App" className="container col-md-6 offset-md-2" >
             {showError()}
-            {SignInForm()}
-            {redirectUser()}
+            {showSuccess()}
+            {SignUpForm()}
             
         </Layout>
     )
@@ -112,4 +108,4 @@ const SignIn = () => {
     
     }
 
-export default SignIn
+export default Signup
