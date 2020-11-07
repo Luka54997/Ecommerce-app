@@ -5,6 +5,7 @@ import Signin from './user/Signin'
 import Home from './core/Home'
 import PrivateRoute from './auth/PrivateRoute'
 import Dashboard from './user/Dashboard'
+import AdminDashboard from './user/AdminDashboard'
 
 const Routes = () => {
 
