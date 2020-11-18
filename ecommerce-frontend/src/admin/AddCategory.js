@@ -4,6 +4,7 @@ import Layout from '../core/Layout'
 import {isAuthenticated} from '../auth/auth'
 import {createCategory} from './apiAdmin'
 
+
 const AddCategory = () =>{
 
     const [name,setName] = useState('')
