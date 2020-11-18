@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Layout from '../core/Layout'
 import {isAuthenticated} from '../auth/auth'
-import {createProduct} from './apiAdmin'
+import {createProduct,getCategories} from './apiAdmin'
 
 
 const AddProduct = () =>{
@@ -41,8 +41,22 @@ const AddProduct = () =>{
     formData
 } = values
 
+const init = () => {
+    getCategories().then(data => {
+        if (data.error) {
+            setValues({ ...values, error: data.error });
+        } else {
+            setValues({
+                ...values,
+                categories: data,
+                formData: new FormData()
+            })
+        }
+    })
+}
+
 useEffect(()=>{
-    setValues({...values,formData: new FormData()})
+    init()
 },[])
 
 const handleChange = name => event =>{
@@ -63,6 +77,25 @@ const clickSubmit = (event) =>{
         }
     })
 }
+
+    const showError = () =>{
+        return(
+        <div className="alert alert-danger" style={{display:error ? '' : 'none' }}>{error}</div>
+        )
+    }
+    const showSuccess = () =>{
+        return(
+        <div className="alert alert-info" style={{display:createdProduct ? '' : 'none' }}>
+            <h2>{`${createdProduct} is successfully created`}</h2>
+        </div>
+        )
+    }
+
+    const showLoading = () =>{
+        return(
+            loading && (<div className='alert alert-success'><h2>Loading...</h2></div>)
+        )
+    }
 
     const newPostForm = () =>{
         return(
@@ -91,8 +124,12 @@ const clickSubmit = (event) =>{
                 <div className='form-group'>
                     <label className='text-muted'>Category</label>
                     <select onChange={handleChange('category')}   className='form-control' >
-                        <option value='5f6ca885c82f17130028d088'>Node Js</option>
-                        <option value='5f6ca885c82f17130028d088'>React</option>
+                        <option>Please Select</option>
+                        {categories && categories.map((c,i) =>(
+                            <option key={i} value={c._id}>{c.name}</option>
+                            
+                        ))}
+                        
                     </select>
                 </div>
 
@@ -121,7 +158,10 @@ const clickSubmit = (event) =>{
 
         <div className="row">
             
-            <div className="col-md-4 offset-md-4">
+            <div className="col-md-4 offset-md-4">                
+                {showLoading()}
+                {showSuccess()}
+                {showError()}
                 {newPostForm()}
             </div>
         </div>
