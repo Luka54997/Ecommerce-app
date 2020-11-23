@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Layout from './Layout'
 import {getCategories} from './apiCore'
-
+import CheckBox from './Checkbox'
 
  const Shop = () =>{
 
@@ -23,11 +23,20 @@ import {getCategories} from './apiCore'
         init()
     },[])
 
+    const handleFilters = (filters,filterBy) =>{
+        console.log('SHOP',filters,filterBy)
+    }
+
     return(
 
         <Layout title="Shop page" description="Node React E-commerce App" className="container-fluid">
             <div className='row'>
-                <div className='col-4'>{JSON.stringify(categories)}</div>
+                <div className='col-4'>
+                    <h4>Filter by category</h4>
+                    <ul>
+                        <CheckBox categories={categories} handleFilters={filters => handleFilters(filters,'category')}/>
+                    </ul>                                       
+                </div>
                 <div className='col-8'>right Side</div>
             </div>
             
