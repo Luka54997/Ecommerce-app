@@ -4,6 +4,9 @@ import {getCategories} from './apiCore'
 import CheckBox from './Checkbox'
 import RadioButton from './RadioButton'
 import {prices} from './fixedPrice'
+import {getFilteredProducts} from '../core/apiCore'
+import Card from './Card'
+
 
  const Shop = () =>{
 
@@ -12,6 +15,10 @@ import {prices} from './fixedPrice'
     const [myFilters,setMyFilters] = useState({
         filters: {category:[],price:[]}
     })
+
+    const [limit,setLimit] = useState(6)
+    const [skip,setSkip] = useState(0)
+    const [filteredResults,setFilteredResults] = useState([])
 
     const init = () =>{
         getCategories().then(data =>{
@@ -26,6 +33,7 @@ import {prices} from './fixedPrice'
     
     useEffect(()=>{
         init()
+        loadFilteredResults(skip,limit,myFilters.filters)
     },[])
 
     const handleFilters = (filters,filterBy) =>{
@@ -36,9 +44,8 @@ import {prices} from './fixedPrice'
             let priceValues = handlePrice(filters)
             newFilters.filters[filterBy] = priceValues
         }
-
-        setMyFilters(newFilters)
-        console.log(myFilters)
+        loadFilteredResults(myFilters.filters)
+        setMyFilters(newFilters)        
     }
 
     const handlePrice = (value) =>{
@@ -51,6 +58,20 @@ import {prices} from './fixedPrice'
             }
         }
         return array
+    }
+
+    const loadFilteredResults = (newFilters) =>{
+
+      // console.log(newFilters)
+        getFilteredProducts(skip,limit,newFilters).then(data=>{
+            if(data.error){
+                setError(data.error)
+            }else{
+                setFilteredResults(data.data)
+            }
+            
+        })
+
     }
 
     return(
@@ -67,7 +88,13 @@ import {prices} from './fixedPrice'
                         <RadioButton prices={prices} handleFilters={filters => handleFilters(filters,'price')}/>
                     </div>                                    
                 </div>
-                <div className='col-8'>{JSON.stringify(myFilters)}</div>
+                
+                    <div className='row col-8'>{filteredResults.map((result,index)=>{
+                        return(
+                            <Card key={index} product={result}></Card>
+                        )
+                    })}
+                    </div>
             </div>
             
         </Layout>
