@@ -18,6 +18,7 @@ import Card from './Card'
 
     const [limit,setLimit] = useState(6)
     const [skip,setSkip] = useState(0)
+    const [size, setSize] = useState(0)
     const [filteredResults,setFilteredResults] = useState([])
 
     const init = () =>{
@@ -68,11 +69,38 @@ import Card from './Card'
                 setError(data.error)
             }else{
                 setFilteredResults(data.data)
+                setSize(data.size)
+                setSkip(0)
             }
             
         })
 
     }
+
+    const loadMore = () =>{
+
+        const toSkip = skip + limit
+        // console.log(newFilters)
+          getFilteredProducts(toSkip,limit,myFilters.filters).then(data=>{
+              if(data.error){
+                  setError(data.error)
+              }else{
+                  setFilteredResults([...filteredResults,...data.data])
+                  setSize(data.size)
+                  setSkip(toSkip)
+              }
+              
+          })
+  
+      }
+
+      const loadMoreButton = () =>{
+          return(
+              size > 0 && size >= limit && (
+                  <button onClick={loadMore} className='btn btn-warning mb-5 ml-3'>Load More</button>
+              )
+          )
+      }
 
     return(
 
@@ -94,7 +122,9 @@ import Card from './Card'
                             <Card key={index} product={result}></Card>
                         )
                     })}
+                    {loadMoreButton()}
                     </div>
+                    
             </div>
             
         </Layout>
