@@ -12,7 +12,7 @@ const Card = ({product}) =>{
                     <ShowImage item={product} url='product'></ShowImage>
                     <p>{product.description}</p>
                     <p>${product.price}</p>
-                    <Link to='/'>
+                    <Link to={`/product/${product._id}`}>
                     <button className='btn btn-outline-primary mt-2 mb-2'>View Product</button>
                     </Link>
                     <button className='btn btn-outline-warning mt-2 mb-2'>Add to cart</button>

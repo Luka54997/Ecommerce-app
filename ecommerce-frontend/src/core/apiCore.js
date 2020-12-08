@@ -44,3 +44,10 @@ export const list = (params) =>{
     }).then(response =>{return response.json()})
      .catch(err =>{console.log(err)})
 } 
+
+export const getProduct = (id) =>{
+    return fetch(`${API}/product/${id}`,{
+        method: "GET"
+    }).then(response =>{return response.json()})
+     .catch(err =>{console.log(err)})
+}
