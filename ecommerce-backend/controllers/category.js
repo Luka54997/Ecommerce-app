@@ -91,7 +91,6 @@ exports.list = (req,res) =>{
                 error: err
             })
         }
-
         res.json(data)
 
     })

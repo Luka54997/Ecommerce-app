@@ -3,6 +3,7 @@ const _ = require('lodash')
 const fs = require('fs')
 const {errorHandler} = require('../helpers/dbErrorHandler')
 const Product = require('../models/product')
+const { find } = require('../models/product')
 
 
 
@@ -185,13 +186,36 @@ exports.update = (req,res) =>{
                 return res.status(400).json({
                     err: 'Products not found'
                 })
-
-                
             }
-
             res.json(products)
         })
     }
+
+    exports.listSearch = (req,res) =>{
+        const query = {}
+
+        if(req.query.search){
+            query.name = { $regex: req.query.search, $options: 'i'}
+            if(req.query.category && req.query.category != 'All'){
+                query.category = req.query.category
+            }
+
+            console.log(query)
+
+            Product.find(query,(err,products)=>{
+                if(err){
+                    return res.status(404).json({
+                        error: err
+                    })
+                }
+                res.json(products)
+                
+            }).select('-photo')
+        }
+        
+    }
+
+   
 
     exports.listRelated = (req,res) =>{
 
@@ -237,8 +261,8 @@ exports.update = (req,res) =>{
         let skip = parseInt(req.body.skip)
         let findArgs = {}
     
-        // console.log(order, sortBy, limit, skip, req.body.filters);
-        // console.log("findArgs", findArgs);
+         //console.log(order, sortBy, limit, skip, req.body.filters);
+         //.log("findArgs", findArgs);
     
         for (let key in req.body.filters) {
             if (req.body.filters[key].length > 0) {
@@ -254,6 +278,8 @@ exports.update = (req,res) =>{
                 }
             }
         }
+
+        
     
         Product.find(findArgs)
             .select("-photo")

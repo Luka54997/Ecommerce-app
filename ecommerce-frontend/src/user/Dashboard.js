@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import Layout from '../core/Layout'
 import {isAuthenticated} from '../auth/auth'
-import '../css/dashboard.css'
 
 
 const Dashboard = () =>{
