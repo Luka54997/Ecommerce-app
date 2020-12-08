@@ -186,13 +186,36 @@ exports.update = (req,res) =>{
                 return res.status(400).json({
                     err: 'Products not found'
                 })
-
-                
             }
-
             res.json(products)
         })
     }
+
+    exports.listSearch = (req,res) =>{
+        const query = {}
+
+        if(req.query.search){
+            query.name = { $regex: req.query.search, $options: 'i'}
+            if(req.query.category && req.query.category != 'All'){
+                query.category = req.query.category
+            }
+
+            console.log(query)
+
+            Product.find(query,(err,products)=>{
+                if(err){
+                    return res.status(404).json({
+                        error: err
+                    })
+                }
+                res.json(products)
+                
+            }).select('-photo')
+        }
+        
+    }
+
+   
 
     exports.listRelated = (req,res) =>{
 
