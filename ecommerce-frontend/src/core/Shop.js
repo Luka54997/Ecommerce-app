@@ -119,7 +119,9 @@ import Card from './Card'
                 
                     <div className='row col-8'>{filteredResults.map((result,index)=>{
                         return(
-                            <Card key={index} product={result}></Card>
+                            <div className='col-4 mb-2'>
+                                <Card key={index} product={result}></Card>
+                            </div>
                         )
                     })}
                     {loadMoreButton()}

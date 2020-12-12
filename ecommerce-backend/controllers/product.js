@@ -8,10 +8,8 @@ const { find } = require('../models/product')
 
 
 exports.productById = (req,res,next,id) =>{
-
-    console.log(id);
-
-    Product.findById(id).exec((err,product) =>{
+    
+    Product.findById(id).populate('category').exec((err,product) =>{
 
         
 
@@ -34,8 +32,6 @@ exports.productById = (req,res,next,id) =>{
 }
 
 exports.read = (req,res) => {
-
-    
 
     req.product.photo = undefined
 

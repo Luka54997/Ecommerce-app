@@ -9,6 +9,11 @@
     animation: Gradient 15s ease infinite;
 }
 
+.name {
+    background:rgb(10, 83, 255);
+    color:#fff
+}
+
 @-webkit-keyframes Gradient {
     0% {
         background-position: 0% 50%;

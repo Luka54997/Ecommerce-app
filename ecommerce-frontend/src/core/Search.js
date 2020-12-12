@@ -42,9 +42,6 @@ const Search = () => {
                 }
             );
         }
-        else{
-            setData({...data, results: [], searched: true });
-        }
     }
 
     const searchSubmit = e => {
@@ -62,8 +59,10 @@ const Search = () => {
             <div>
                 <h3>{showMessage(searched,results)}</h3>
                 <div className="row">
-                    {results.map((product, i) => (
-                        <Card key={i} product={product} />
+                    {results.map((product, index) => (
+                        <div className='col-4 mb-3'>
+                            <Card key={index} product ={product}></Card>
+                        </div>
                     ))}
             </div>
             </div>
@@ -73,15 +72,12 @@ const Search = () => {
     }
 
     const showMessage = (searched,results) =>{
-
-        console.log('message')
         if(searched && results.length > 0){
             return `Found ${results.length} products`            
         }
         if(searched && results.length < 1){
             return `No products found`
         }
-        
     }
 
     const searchForm = () => (
