@@ -108,9 +108,7 @@ import Card from './Card'
             <div className='row'>
                 <div className='col-4'>
                     <h4>Filter by category</h4>
-                    <ul>
-                        <CheckBox categories={categories} handleFilters={filters => handleFilters(filters,'category')}/>
-                    </ul>   
+                     <CheckBox categories={categories} handleFilters={filters => handleFilters(filters,'category')}/>
                     <h4>Filter by price</h4>
                     <div>
                         <RadioButton prices={prices} handleFilters={filters => handleFilters(filters,'price')}/>

@@ -12,11 +12,15 @@ const RadioButton = ({prices,handleFilters}) =>{
 
     return (
         prices.map((price,index)=>{
-            return(
-                <div key={index}>
-                    <input onChange={handleChange} type ='radio' className='ml-2 mr-4' value={`${price._id}`} name={price}></input>
-                    <label className='form-check-label'>{price.name}</label>
-                </div>
+            return(      
+                    <div key ={index}>
+                         <div class="form-check pl-0 mb-3 ml-4">
+                            <input type="radio" onChange={handleChange} className="form-check-input" value={price._id} name="materialExampleRadios"/>
+                            <label className="form-check-label small text-uppercase card-link-secondary" >{price.name}</label>
+                        </div>                    
+                    </div>          
+                   
+                
             )
         
         })
