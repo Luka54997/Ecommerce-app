@@ -41,3 +41,40 @@ export const getitemsFromCart = () =>{
     }
     return []
 }
+
+export const updateItem = (productId,count) =>{
+    if(typeof window !== 'undefined'){
+        if(localStorage.getItem('cart')){
+            const cart = JSON.parse(localStorage.getItem('cart'))
+
+            cart.forEach(item => {
+                if(item._id === productId){
+                    item.count = count
+                }
+            });
+
+            localStorage.setItem('cart',JSON.stringify(cart))
+
+        }        
+    }
+    
+}
+
+export const removeItem = (productId) =>{
+    console.log('eeeeeeeeeee')
+    if(typeof window !== 'undefined'){
+        if(localStorage.getItem('cart')){
+            const cart = JSON.parse(localStorage.getItem('cart'))
+
+            cart.forEach((item,index) => {
+                if(item._id === productId){
+                    cart.splice(index,1)
+                }
+            });
+
+            localStorage.setItem('cart',JSON.stringify(cart))
+
+        }        
+    }
+    
+}

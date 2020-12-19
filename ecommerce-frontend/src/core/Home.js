@@ -6,17 +6,17 @@ import Search from './Search'
 
 const Home = () => {
 
-    const [productsBySell, setProductsBySell] = useState([]);
-    const [productsByArrival, setProductsByArrival] = useState([]);
-    const [error, setError] = useState(false);
+    const [productsBySell, setProductsBySell] = useState([])
+    const [productsByArrival, setProductsByArrival] = useState([])
+    const [error, setError] = useState(false)
     
     
     const loadProductsBySell = () => {
         getProducts('sold').then(data => {
             if (data.error) {
-                setError(data.error);
+                setError(data.error)
             } else {
-                setProductsBySell(data);
+                setProductsBySell(data)
             }
         });
     };
@@ -25,16 +25,16 @@ const Home = () => {
         getProducts('createdAt').then(data => {
             console.log(data);
             if (data.error) {
-                setError(data.error);
+                setError(data.error)
             } else {
-                setProductsByArrival(data);
+                setProductsByArrival(data)
             }
         });
     };
 
     useEffect(() => {
-        loadProductsByArrival();
-        loadProductsBySell();
+        loadProductsByArrival()
+        loadProductsBySell()
     }, []);
 
     
