@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const expressJwt = require('express-jwt')
 exports.signUp = (req,res) =>{
 
-    //console.log(req.body)
     const user = new User(req.body)
 
     user.save((err,user) => {
@@ -74,12 +73,6 @@ exports.requireSignin = expressJwt({
 
     let user = req.profile && req.auth && req.profile._id == req.auth.id
 
-
-    console.log(req.profile)
-    console.log(req.auth)
-    console.log(req.profile._id)
-    console.log(req.auth.id)
-    console.log(user)
 
     if(!user){
         return res.status(403).json({

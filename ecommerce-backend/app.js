@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const categoryRoutes = require('./routes/category')
+const braintreeRoutes = require('./routes/braintree')
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const expressValidator = require('express-validator')
@@ -24,11 +25,7 @@ mongoose.connect(
     console.log(`DB connection error: ${err.message}`)
   });
 
-/*app.get('/',(req,res) => {
-  res.send(uuidv1.v1())    
 
-
-})*/
 app.use(cors())
 app.use(cookieParser())
 app.use(morgan('dev'))
@@ -39,6 +36,7 @@ app.use('/api',authRoutes)
 app.use('/api',userRoutes)
 app.use('/api',categoryRoutes)
 app.use('/api',productRoutes)
+app.use('/api',braintreeRoutes)
 
 
 
