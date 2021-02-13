@@ -74,7 +74,7 @@ const Card = ({product, showViewProductButton = true, showAddToCartButton = true
                      {removeItemButton &&(
                         showRemoveItemButton()
                     )} 
-                    {showAddToCartButton &&(
+                    {showAddToCartButton && (product.quantity > 0) &&(
                         AddToCartButton()
                     )}
                     {update && (

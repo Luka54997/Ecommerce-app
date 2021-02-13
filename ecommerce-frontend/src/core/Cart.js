@@ -42,10 +42,10 @@ const Cart = () =>{
     return(
         <Layout title="Cart page" description="Manage cart items. Add or remove or continue to checkout" className="container-fluid">
            <div className='row'>
-               <div className='col-6'>
+               <div className='col-5'>
                     {cartItems.length > 0 ? showItems(cartItems) : noItemsInCart()}
                </div>
-               <div className='col-6'>
+               <div className='col-3'>
                    <h2 className='mb-4'>Your Cart Summary</h2>
                    <hr/>
                     <Checkout products={cartItems}/>
